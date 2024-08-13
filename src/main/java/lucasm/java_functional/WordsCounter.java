@@ -9,22 +9,22 @@ import lombok.Setter;
 @Setter
 public class WordsCounter {
 
-  private HashMap<String, Integer> wordsCounter;
+  private HashMap<String, Integer> wordsCounterMap;
   private String directory;
   private final FileManager fileManager;
 
   WordsCounter(String directory) {
-    wordsCounter = new HashMap<>();
+    wordsCounterMap = new HashMap<>();
     fileManager = new FileManager();
     this.directory = directory;
   }
 
-  public void updateWordsCounter() {
+  public void updateWordsCounterMap() {
     try (Stream<String> lines = fileManager.getStreamStringFromDirectory(directory)) {
       lines
           .flatMap(line -> Stream.of(line.split("\\W")))
           .filter(s -> s.matches("\\w+"))
-          .forEach(s -> wordsCounter.put(s, wordsCounter.getOrDefault(s, 0) + 1));
+          .forEach(s -> wordsCounterMap.put(s, wordsCounterMap.getOrDefault(s, 0) + 1));
     }
   }
 }
