@@ -19,11 +19,14 @@ public class WordsCounter {
     this.directory = directory;
   }
 
+  /**
+   * Split words from directory around non alphanumerics characters except apostrophe (').
+   */
   public void updateWordsCounterMap() {
     try (Stream<String> lines = fileManager.getStreamStringFromDirectory(directory)) {
       lines
-          .flatMap(line -> Stream.of(line.split("\\W")))
-          .filter(s -> s.matches("\\w+"))
+          .flatMap(line -> Stream.of(line.split("[^\\w']+")))
+          .filter(s -> s.matches("[\\w']+"))
           .forEach(s -> wordsCounterMap.put(s, wordsCounterMap.getOrDefault(s, 0) + 1));
     }
   }

@@ -14,6 +14,7 @@ public class Main {
   public static void main(String[] args) {
 
     WordsCounter wordsCounter = new WordsCounter("src/main/resources/txt");
+    // add '/longtxt' in directory path to longer data
 
     wordsCounter.updateWordsCounterMap();
 
@@ -42,7 +43,7 @@ public class Main {
     logger.info(getFormattedString("List keys with highest value: %s", listHigherValue.toString()));
 
     List<String> listLowestValue = MapUtils.getKeysWithLowestValue(mapSortedByKey);
-    logger.info(getFormattedString("List keys with highest value: %s", listLowestValue.toString()));
+    logger.info(getFormattedString("List keys with lowest value: %s", listLowestValue.toString()));
 
     Double average = MapUtils.getAverageValue(mapSortedByKey);
     logger.info(getFormattedString("Average value: %s", average.toString()));
