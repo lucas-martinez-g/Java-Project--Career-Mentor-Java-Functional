@@ -1,4 +1,4 @@
-package lucasm.java_functional;
+package lucasm.java_functional.utils;
 
 import java.util.Collections;
 import java.util.Comparator;

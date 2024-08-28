@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import lucasm.java_functional.utils.LoggerUtils;
+import lucasm.java_functional.utils.MapUtils;
 
 public class Main {
 
