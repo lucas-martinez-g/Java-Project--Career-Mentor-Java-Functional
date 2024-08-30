@@ -12,4 +12,9 @@ public class FilterPropertyNOT implements FilterProperty {
   public boolean pass(Property property) {
     return !filterProperty.pass(property);
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + ".(%s)".formatted(filterProperty.toString());
+  }
 }

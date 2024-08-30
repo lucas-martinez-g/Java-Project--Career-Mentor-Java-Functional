@@ -4,17 +4,17 @@ import lombok.AllArgsConstructor;
 import lucasm.java_functional.models.Property;
 
 @AllArgsConstructor
-public class FilterPropertyPriceHigherThan implements FilterProperty {
+public class FilterPropertyMetersHigherThan implements FilterProperty {
 
-  private Double price;
+  private Integer meters;
 
   @Override
   public boolean pass(Property property) {
-    return property.getPrice() > price;
+    return property.getMeters() > meters;
   }
 
   @Override
   public String toString() {
-    return getClass().getSimpleName() + "." + price;
+    return getClass().getSimpleName() + "." + meters;
   }
 }

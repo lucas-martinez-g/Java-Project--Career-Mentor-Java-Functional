@@ -13,4 +13,10 @@ public class FilterPropertyOR implements FilterProperty {
   public boolean pass(Property property) {
     return Boolean.logicalOr(filterProperty1.pass(property), filterProperty2.pass(property));
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + ".(%s|%s)".formatted(filterProperty1.toString(),
+        filterProperty2.toString());
+  }
 }
