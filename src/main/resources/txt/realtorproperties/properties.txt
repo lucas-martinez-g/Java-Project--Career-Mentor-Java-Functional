@@ -1,0 +1,20 @@
+Simpsons's House, Evergreen, 742, Springfield, Massachusetts, United States of America, 2023, 50, 3, true, A
+Las Vegas Casino Hotel, Fake Street, 1234, 7, B, Las Vegas, Nevada, United States of America, 2014, 65, 4, false, B
+Central Park Apartment, 5th Avenue, 350, 12, A, New York, New York, United States of America, 2020, 80, 2, true, C
+Beach House, Ocean Drive, 101, Santa Monica, California, United States of America, 2018, 120, 4, true, D
+Mountain Cabin, Pine Road, 88, Aspen, Colorado, United States of America, 2015, 90, 3, true, E
+Desert Villa, Cactus Lane, 23, Palm Springs, California, United States of America, 2017, 110, 5, true, A
+Downtown Loft, Main St, 450, 15, C, Chicago, Illinois, United States of America, 2019, 70, 1, false, B
+Country House, Maple Avenue, 200, Nashville, Tennessee, United States of America, 2016, 140, 6, true, C
+Suburban Home, Elm Street, 67, Austin, Texas, United States of America, 2021, 95, 3, true, D
+Penthouse Suite, Luxury Blvd, 900, 20, P, Miami, Florida, United States of America, 2022, 150, 4, true, E
+Farmhouse, Country Road, 345, Nebraska, United States of America, 2013, 200, 7, true, A
+Lakeside Cottage, Lakeview Drive, 12, Lake Tahoe, California, United States of America, 2011, 85, 2, true, B
+Historic Mansion, Heritage St, 1, Boston, Massachusetts, United States of America, 2010, 300, 10, true, C
+Modern Condo, Future Lane, 77, San Francisco, California, United States of America, 2016, 60, 2, false, D
+Urban Studio, Metro St, 99, Seattle, Washington, United States of America, 2018, 40, 1, false, E
+Luxury Villa, Gold Coast, 55, Malibu, California, United States of America, 2021, 250, 8, true, A
+Cottage by the Woods, Forest Path, 5, Portland, Oregon, United States of America, 2017, 65, 2, true, B
+Riverside Apartment, River Road, 333, 2, R, New Orleans, Louisiana, United States of America, 2019, 75, 2, false, C
+Ski Lodge, Snowy Way, 888, Park City, Utah, United States of America, 2015, 130, 5, true, D
+Cozy Bungalow, Sunset Blvd, 444, Santa Barbara, California, United States of America, 2020, 55, 2, true, E

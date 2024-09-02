@@ -1,5 +1,6 @@
 package lucasm.java_functional.models;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.NonNull;
@@ -22,6 +23,36 @@ public class Property {
   private Boolean garage;
   @NonNull
   private ZoneChar zoneChar;
+
+  public Property(String[] attributes) {
+    switch (attributes.length) {
+      case 11: {
+        name = attributes[0];
+        address = new Address(attributes[1], attributes[2], attributes[3], attributes[4],
+            attributes[5]);
+        year = Integer.valueOf(attributes[6]);
+        meters = Integer.valueOf(attributes[7]);
+        rooms = Integer.valueOf(attributes[8]);
+        garage = Boolean.valueOf(attributes[9]);
+        zoneChar = ZoneChar.valueOf(attributes[10]);
+        break;
+      }
+      case 13: {
+        name = attributes[0];
+        address = new Address(attributes[1], attributes[2], attributes[3], attributes[4],
+            attributes[5], attributes[6], attributes[7]);
+        year = Integer.valueOf(attributes[8]);
+        meters = Integer.valueOf(attributes[9]);
+        rooms = Integer.valueOf(attributes[10]);
+        garage = Boolean.valueOf(attributes[11]);
+        zoneChar = ZoneChar.valueOf(attributes[12]);
+        break;
+      }
+      default: {
+        throw new IllegalArgumentException();
+      }
+    }
+  }
 
   public Double getPrice() {
     Zone zone = Zones.getZoneByChar(zoneChar);
@@ -47,6 +78,6 @@ public class Property {
         ", rooms=" + rooms +
         ", garage=" + garage +
         ", zone=" + zoneChar +
-        ", price: $" + getPrice() + '}';
+        ", price: $" + new DecimalFormat("#.##").format(getPrice()) + '}';
   }
 }

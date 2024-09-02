@@ -1,9 +1,11 @@
 package lucasm.java_functional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -16,10 +18,8 @@ import lucasm.java_functional.filters.property.FilterPropertyNOT;
 import lucasm.java_functional.filters.property.FilterPropertyOR;
 import lucasm.java_functional.filters.property.FilterPropertyPriceHigherThan;
 import lucasm.java_functional.filters.property.FilterPropertyRoomsHigherThan;
-import lucasm.java_functional.models.Address;
 import lucasm.java_functional.models.Property;
 import lucasm.java_functional.models.Realtor;
-import lucasm.java_functional.models.ZoneChar;
 import lucasm.java_functional.models.Zones;
 import lucasm.java_functional.utils.LoggerUtils;
 import lucasm.java_functional.utils.MapUtils;
@@ -37,7 +37,7 @@ public class Main {
   }
 
   private static void useMapUtils() {
-    WordsCounter wordsCounter = new WordsCounter("src/main/resources/txt");
+    WordsCounter wordsCounter = new WordsCounter("src/main/resources/txt/wordscounter");
     // add '/longtxt' in directory path to longer data
 
     wordsCounter.updateWordsCounterMap();
@@ -104,66 +104,20 @@ public class Main {
     Realtor realtor = new Realtor();
     List<Property> properties = new ArrayList<>();
 
-    properties.add(new Property("Simpsons's House",
-        new Address("Evergreen", "742", "Springfield", "Massachusetts", "United States of America"),
-        2023, 50, 3, true, ZoneChar.A));
-    properties.add(new Property("Las Vegas Casino Hotel",
-        new Address("Fake Street", "1234", "7", "B", "Las Vegas", "Nevada",
-            "United States of America"), 2014, 65, 4, false, ZoneChar.B));
-    properties.add(new Property("Central Park Apartment",
-        new Address("5th Avenue", "350", "12", "A", "New York", "New York",
-            "United States of America"), 2020, 80, 2, true, ZoneChar.C));
-    properties.add(new Property("Beach House",
-        new Address("Ocean Drive", "101", "Santa Monica", "California", "United States of America"),
-        2018, 120, 4, true, ZoneChar.D));
-    properties.add(new Property("Mountain Cabin",
-        new Address("Pine Road", "88", "Aspen", "Colorado", "United States of America"), 2015, 90,
-        3, true, ZoneChar.E));
-    properties.add(new Property("Desert Villa",
-        new Address("Cactus Lane", "23", "Palm Springs", "California", "United States of America"),
-        2017, 110, 5, true, ZoneChar.A));
-    properties.add(new Property("Downtown Loft",
-        new Address("Main St", "450", "15", "C", "Chicago", "Illinois", "United States of America"),
-        2019, 70, 1, false, ZoneChar.B));
-    properties.add(new Property("Country House",
-        new Address("Maple Avenue", "200", "Nashville", "Tennessee", "United States of America"),
-        2016, 140, 6, true, ZoneChar.C));
-    properties.add(new Property("Suburban Home",
-        new Address("Elm Street", "67", "Austin", "Texas", "United States of America"), 2021, 95, 3,
-        true, ZoneChar.D));
-    properties.add(new Property("Penthouse Suite",
-        new Address("Luxury Blvd", "900", "20", "P", "Miami", "Florida",
-            "United States of America"), 2022, 150, 4, true, ZoneChar.E));
-    properties.add(new Property("Farmhouse",
-        new Address("Country Road", "345", "Omaha", "Nebraska", "United States of America"), 2013,
-        200, 7, true, ZoneChar.A));
-    properties.add(new Property("Lakeside Cottage",
-        new Address("Lakeview Drive", "12", "Lake Tahoe", "California", "United States of America"),
-        2011, 85, 2, true, ZoneChar.B));
-    properties.add(new Property("Historic Mansion",
-        new Address("Heritage St", "1", "Boston", "Massachusetts", "United States of America"),
-        2010, 300, 10, true, ZoneChar.C));
-    properties.add(new Property("Modern Condo",
-        new Address("Future Lane", "77", "San Francisco", "California", "United States of America"),
-        2016, 60, 2, false, ZoneChar.D));
-    properties.add(new Property("Urban Studio",
-        new Address("Metro St", "99", "Seattle", "Washington", "United States of America"), 2018,
-        40, 1, false, ZoneChar.E));
-    properties.add(new Property("Luxury Villa",
-        new Address("Gold Coast", "55", "Malibu", "California", "United States of America"), 2021,
-        250, 8, true, ZoneChar.A));
-    properties.add(new Property("Cottage by the Woods",
-        new Address("Forest Path", "5", "Portland", "Oregon", "United States of America"), 2017, 65,
-        2, true, ZoneChar.B));
-    properties.add(new Property("Riverside Apartment",
-        new Address("River Road", "333", "2", "R", "New Orleans", "Louisiana",
-            "United States of America"), 2019, 75, 2, false, ZoneChar.C));
-    properties.add(new Property("Ski Lodge",
-        new Address("Snowy Way", "888", "Park City", "Utah", "United States of America"), 2015, 130,
-        5, true, ZoneChar.D));
-    properties.add(new Property("Cozy Bungalow",
-        new Address("Sunset Blvd", "444", "Santa Barbara", "California",
-            "United States of America"), 2020, 55, 2, true, ZoneChar.E));
+    FileManager fileManager = new FileManager();
+    Stream<String> lines = fileManager.getStreamStringFromDirectory(
+        "src/main/resources/txt/realtorproperties");
+    lines
+        .map(line -> line.split(", "))
+        .toList()
+        .forEach(attributes -> {
+          try {
+            properties.add(new Property(attributes));
+          } catch (IllegalArgumentException e) {
+            logger.log(Level.SEVERE, "Invalid quantity of property parameters: %s".formatted(
+                Arrays.stream(attributes).toList()));
+          }
+        });
 
     realtor.getProperties().addAll(properties);
     return realtor;
