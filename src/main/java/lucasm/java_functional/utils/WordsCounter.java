@@ -1,4 +1,4 @@
-package lucasm.java_functional;
+package lucasm.java_functional.utils;
 
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ public class WordsCounter {
   private String directory;
   private final FileManager fileManager;
 
-  WordsCounter(String directory) {
+  public WordsCounter(String directory) {
     wordsCounterMap = new HashMap<>();
     fileManager = new FileManager();
     this.directory = directory;

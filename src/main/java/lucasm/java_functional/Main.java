@@ -1,15 +1,14 @@
 package lucasm.java_functional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import static lucasm.java_functional.utils.LoggerUtils.getFormattedString;
+import static lucasm.java_functional.utils.LoggerUtils.logFilteredProperties;
+import static lucasm.java_functional.utils.RealtorUtils.createRealtor;
+
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import lucasm.java_functional.filters.property.FilterProperty;
 import lucasm.java_functional.filters.property.FilterPropertyAntiquityHigherThan;
 import lucasm.java_functional.filters.property.FilterPropertyHasGarage;
@@ -18,22 +17,23 @@ import lucasm.java_functional.filters.property.FilterPropertyNOT;
 import lucasm.java_functional.filters.property.FilterPropertyOR;
 import lucasm.java_functional.filters.property.FilterPropertyPriceHigherThan;
 import lucasm.java_functional.filters.property.FilterPropertyRoomsHigherThan;
-import lucasm.java_functional.models.Property;
 import lucasm.java_functional.models.Realtor;
+import lucasm.java_functional.models.Student;
 import lucasm.java_functional.models.Zones;
 import lucasm.java_functional.utils.LoggerUtils;
 import lucasm.java_functional.utils.MapUtils;
+import lucasm.java_functional.utils.SubjectsUtils;
+import lucasm.java_functional.utils.WordsCounter;
 
 public class Main {
 
   static final Logger logger = LoggerUtils.getLogger();
-  static final String RESET = "\033[0m";
-  static final String BLUE = "\033[0;34m";
 
   public static void main(String[] args) {
 
 //    useMapUtils();
-    usePropertyRealtor();
+//    usePropertyRealtor();
+    useSubjectsUtils();
   }
 
   private static void useMapUtils() {
@@ -76,11 +76,11 @@ public class Main {
   private static void usePropertyRealtor() {
     Zones.createZones();
 
-    Realtor realtor = createRealtor();
+    Realtor realtor = createRealtor("src/main/resources/txt/realtorproperties");
 
     logger.info(getFormattedString("All properties:"));
 
-    realtor.getProperties().forEach(Main::logProperty);
+    realtor.getProperties().forEach(LoggerUtils::logProperty);
 
     FilterProperty filterProperty1 = new FilterPropertyNOT(
         new FilterPropertyPriceHigherThan(100000.0));
@@ -97,53 +97,25 @@ public class Main {
 
     realtor.getPropertiesByFilters(filterProperty1, filterProperty2, filterProperty3,
             filterProperty4)
-        .forEach(Main::logProperty);
+        .forEach(LoggerUtils::logProperty);
   }
 
-  private static Realtor createRealtor() {
-    Realtor realtor = new Realtor();
-    List<Property> properties = new ArrayList<>();
+  private static void useSubjectsUtils() {
 
-    FileManager fileManager = new FileManager();
-    Stream<String> lines = fileManager.getStreamStringFromDirectory(
-        "src/main/resources/txt/realtorproperties");
-    lines
-        .map(line -> line.split(", "))
-        .toList()
-        .forEach(attributes -> {
-          try {
-            properties.add(new Property(attributes));
-          } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Invalid quantity of property parameters: %s".formatted(
-                Arrays.stream(attributes).toList()));
-          }
-        });
+    HashMap<String, Double> subjectsGrades1 = new HashMap<>(
+        Map.of("Maths", 10.0, "History", 3.0, "Physics", 8.9, "Chemistry", 9.5, "Genetic", 1.5));
+    HashMap<String, Double> subjectsGrades2 = new HashMap<>(
+        Map.of("Physical Education", 7.8, "Geography", 0.2, "Literature ", 9.5, "Religion", 4.0,
+            "Art", 3.3));
 
-    realtor.getProperties().addAll(properties);
-    return realtor;
+    Student student1 = new Student("Lucas", subjectsGrades1);
+    Student student2 = new Student("Gabriel", subjectsGrades2);
+
+    SubjectsUtils subjectsUtils = new SubjectsUtils(4.0);
+
+    logger.info(getFormattedString("Student: %s%n\t\t\tPassed subjects: %s".formatted(
+        student1.getName(), subjectsUtils.getPassedSubjets(student1.getSubjectsGrades()))));
+    logger.info(getFormattedString("Student: %s%n\t\t\tPassed subjects: %s".formatted(
+        student2.getName(), subjectsUtils.getPassedSubjets(student2.getSubjectsGrades()))));
   }
-
-  private static void logProperty(Property property) {
-    logger.info(getFormattedString("Details of property: %s", property.toString()));
-  }
-
-  private static String getFormattedString(String originalString, Object... stringsArgs) {
-    return BLUE + originalString.formatted(stringsArgs) + RESET;
-  }
-
-  private static void logFilteredProperties(FilterProperty... filterProperties) {
-    String format = generateFormatString("Filtered properties by", filterProperties.length);
-    String[] classNames = Stream.of(filterProperties)
-        .map(Object::toString)
-        .toArray(String[]::new);
-    logger.info(getFormattedString(format, (Object[]) classNames));
-  }
-
-  private static String generateFormatString(String base, int count) {
-    String placeholders = IntStream.range(0, count)
-        .mapToObj(i -> "%s")
-        .collect(Collectors.joining(", "));
-    return base + " " + placeholders + ":";
-  }
-
 }

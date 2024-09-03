@@ -1,4 +1,4 @@
-package lucasm.java_functional;
+package lucasm.java_functional.utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
-import lucasm.java_functional.utils.LoggerUtils;
 
 public class FileManager {
 
